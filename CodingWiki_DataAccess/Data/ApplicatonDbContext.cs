@@ -60,7 +60,7 @@ namespace CodingWiki_DataAccess.Data
 
         // only remove-migration if migration is not applied on Db
 
-        // to revert back to specific migrartion update-datbase (MigrationnamewithoutId)  update-datbase AddBookToDb 
+        // to revert back to specific migrartion update-database (MigrationnamewithoutId)  update-database AddBookToDb 
 
         // get-migration will bring back all the migraiton and show if it is applied or not
 
