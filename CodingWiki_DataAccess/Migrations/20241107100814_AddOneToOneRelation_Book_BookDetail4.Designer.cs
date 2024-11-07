@@ -4,6 +4,7 @@ using CodingWiki_DataAccess.Data;
 using Microsoft.EntityFrameworkCore;
 using Microsoft.EntityFrameworkCore.Infrastructure;
 using Microsoft.EntityFrameworkCore.Metadata;
+using Microsoft.EntityFrameworkCore.Migrations;
 using Microsoft.EntityFrameworkCore.Storage.ValueConversion;
 
 #nullable disable
@@ -11,9 +12,11 @@ using Microsoft.EntityFrameworkCore.Storage.ValueConversion;
 namespace CodingWiki_DataAccess.Migrations
 {
     [DbContext(typeof(ApplicatonDbContext))]
-    partial class ApplicatonDbContextModelSnapshot : ModelSnapshot
+    [Migration("20241107100814_AddOneToOneRelation_Book_BookDetail4")]
+    partial class AddOneToOneRelation_Book_BookDetail4
     {
-        protected override void BuildModel(ModelBuilder modelBuilder)
+        /// <inheritdoc />
+        protected override void BuildTargetModel(ModelBuilder modelBuilder)
         {
 #pragma warning disable 612, 618
             modelBuilder
@@ -67,15 +70,10 @@ namespace CodingWiki_DataAccess.Migrations
                         .HasPrecision(10, 5)
                         .HasColumnType("decimal(10,5)");
 
-                    b.Property<int>("Publisher_Id")
-                        .HasColumnType("int");
-
                     b.Property<string>("Title")
                         .HasColumnType("nvarchar(max)");
 
                     b.HasKey("BookId");
-
-                    b.HasIndex("Publisher_Id");
 
                     b.ToTable("Books");
 
@@ -85,7 +83,6 @@ namespace CodingWiki_DataAccess.Migrations
                             BookId = 1,
                             ISBM = "123B12",
                             Price = 10.99m,
-                            Publisher_Id = 1,
                             Title = "Sipderman Without Duty"
                         },
                         new
@@ -93,7 +90,6 @@ namespace CodingWiki_DataAccess.Migrations
                             BookId = 2,
                             ISBM = "12123B12",
                             Price = 11.99m,
-                            Publisher_Id = 1,
                             Title = "Fortune of time"
                         },
                         new
@@ -101,7 +97,6 @@ namespace CodingWiki_DataAccess.Migrations
                             BookId = 3,
                             ISBM = "77652",
                             Price = 20.99m,
-                            Publisher_Id = 2,
                             Title = "Fake Sunday"
                         },
                         new
@@ -109,7 +104,6 @@ namespace CodingWiki_DataAccess.Migrations
                             BookId = 4,
                             ISBM = "CC12B12",
                             Price = 25.99m,
-                            Publisher_Id = 3,
                             Title = "Cookie Jar"
                         },
                         new
@@ -117,7 +111,6 @@ namespace CodingWiki_DataAccess.Migrations
                             BookId = 5,
                             ISBM = "90392B33",
                             Price = 40.99m,
-                            Publisher_Id = 3,
                             Title = "Cloudy Forest"
                         });
                 });
@@ -187,26 +180,6 @@ namespace CodingWiki_DataAccess.Migrations
                     b.HasKey("Publisher_Id");
 
                     b.ToTable("Publishers");
-
-                    b.HasData(
-                        new
-                        {
-                            Publisher_Id = 1,
-                            Location = "Chicago",
-                            Publisher_Name = "Pub 1 Jimmy"
-                        },
-                        new
-                        {
-                            Publisher_Id = 2,
-                            Location = "New York",
-                            Publisher_Name = "Pub 2 John"
-                        },
-                        new
-                        {
-                            Publisher_Id = 3,
-                            Location = "Hawaii",
-                            Publisher_Name = "Pub 3 Ben"
-                        });
                 });
 
             modelBuilder.Entity("CodingWiki_Model.Models.SubCategory", b =>
@@ -224,17 +197,6 @@ namespace CodingWiki_DataAccess.Migrations
                     b.HasKey("SubCategory_Id");
 
                     b.ToTable("SubCategories");
-                });
-
-            modelBuilder.Entity("CodingWiki_Model.Models.Book", b =>
-                {
-                    b.HasOne("CodingWiki_Model.Models.Publisher", "Publisher")
-                        .WithMany()
-                        .HasForeignKey("Publisher_Id")
-                        .OnDelete(DeleteBehavior.Cascade)
-                        .IsRequired();
-
-                    b.Navigation("Publisher");
                 });
 
             modelBuilder.Entity("CodingWiki_Model.Models.BookDetail", b =>

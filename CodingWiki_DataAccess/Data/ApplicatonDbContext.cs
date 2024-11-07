@@ -36,16 +36,23 @@ namespace CodingWiki_DataAccess.Data
             modelBuilder.Entity<Book>().Property(b => b.Price).HasPrecision(10, 5);
 
             modelBuilder.Entity<Book>().HasData(
-                new Book { BookId = 1, Title = "Sipderman Without Duty", ISBM = "123B12", Price = 10.99m },
-                new Book { BookId = 2, Title = "Fortune of time", ISBM = "12123B12", Price = 11.99m }
+                new Book { BookId = 1, Title = "Sipderman Without Duty", ISBM = "123B12", Price = 10.99m, Publisher_Id = 1 },
+                new Book { BookId = 2, Title = "Fortune of time", ISBM = "12123B12", Price = 11.99m, Publisher_Id = 1 }
             );
 
             var bookList = new Book[]
             {
-                new Book { BookId = 3, Title = "Fake Sunday", ISBM = "77652", Price = 20.99m },
-                new Book { BookId = 4, Title = "Cookie Jar", ISBM = "CC12B12", Price = 25.99m },
-                new Book { BookId = 5, Title = "Cloudy Forest", ISBM = "90392B33", Price = 40.99m },
+                new Book { BookId = 3, Title = "Fake Sunday", ISBM = "77652", Price = 20.99m , Publisher_Id = 2 },
+                new Book { BookId = 4, Title = "Cookie Jar", ISBM = "CC12B12", Price = 25.99m , Publisher_Id = 3 },
+                new Book { BookId = 5, Title = "Cloudy Forest", ISBM = "90392B33", Price = 40.99m, Publisher_Id = 3  },
             };
+
+            modelBuilder.Entity<Publisher>().HasData(
+
+                new Publisher { Publisher_Id = 1, Publisher_Name = "Pub 1 Jimmy", Location = "Chicago" },
+                new Publisher { Publisher_Id = 2, Publisher_Name = "Pub 2 John", Location = "New York" },
+                new Publisher { Publisher_Id = 3, Publisher_Name = "Pub 3 Ben", Location = "Hawaii" }
+            );
 
             modelBuilder.Entity<Book>().HasData(bookList);
         }
@@ -65,6 +72,12 @@ namespace CodingWiki_DataAccess.Data
         // get-migration will bring back all the migraiton and show if it is applied or not
 
         // drop-database to drop db
+
+        //onDelete: ReferentialAction.Cascade)
+        //.cascade If parent record which is book is deleted then book detail is also delted
+        // .NoAction If parent record which is book is deleted we donot perform any action on book detail
+        // .SetNull it will set Book Detail record as null
+        // .Restrict if there is book detial it will restrict it will not perform delete
 
     }
 }

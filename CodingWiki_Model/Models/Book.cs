@@ -22,5 +22,15 @@ namespace CodingWiki_Model.Models
         public decimal Price { get; set; }
         [NotMapped]
         public decimal PriceRange { get; set; }
+        // one to one mappping
+        //navigation property to Book Detail table
+        public BookDetail BookDetail { get; set; }
+
+        // One to Many (One book can have only one publisher but one pulisher can pulish multiple books)
+        [ForeignKey("Publisher")]
+        public int Publisher_Id { get; set; }
+
+        // Navigation prorperty
+        public Publisher Publisher { get; set; }
     }
 }

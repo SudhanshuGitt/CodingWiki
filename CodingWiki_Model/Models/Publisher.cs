@@ -19,5 +19,9 @@ namespace CodingWiki_Model.Models
         [Required]
         public string Publisher_Name { get; set; }
         public string Location { get; set; }
+
+        // if we wan to retrive all books that publisher has published
+        public IList<Book> Books { get; set; }
+
     }
 }
