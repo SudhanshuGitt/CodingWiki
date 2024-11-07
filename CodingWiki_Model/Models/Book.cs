@@ -32,5 +32,8 @@ namespace CodingWiki_Model.Models
 
         // Navigation prorperty
         public Publisher Publisher { get; set; }
+
+        //Author can have mutiple books and books can have multitple authors(many to many)
+        public List<Author> Authors { get; set; }
     }
 }
