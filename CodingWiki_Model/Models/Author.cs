@@ -38,9 +38,8 @@ namespace CodingWiki_Model.Models
         // if we combine two one to may relaiton we will have many to many relation(.net cor 5 or above)
         // if not .net 5 we need to create mapping table
 
-        public List<Book> Books { get; set; }
-
-        // if we wan to control on mapping table for eg we wan to Add column in Author book
+        //public List<Book> Books { get; set; }
+        public List<BookAuthorMap> BookAuthorMap { get; set; }
 
     }
 }

@@ -35,6 +35,9 @@ namespace CodingWiki_DataAccess.Data
             // we need to work on price property in the Book Entity
             modelBuilder.Entity<Book>().Property(b => b.Price).HasPrecision(10, 5);
 
+            // how to set a composite key using fluentAPI
+            modelBuilder.Entity<BookAuthorMap>().HasKey(b => new { b.Author_Id, b.Book_Id });
+
             modelBuilder.Entity<Book>().HasData(
                 new Book { BookId = 1, Title = "Sipderman Without Duty", ISBM = "123B12", Price = 10.99m, Publisher_Id = 1 },
                 new Book { BookId = 2, Title = "Fortune of time", ISBM = "12123B12", Price = 11.99m, Publisher_Id = 1 }
