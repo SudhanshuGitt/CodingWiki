@@ -19,7 +19,11 @@ namespace CodingWiki_DataAccess.Data
         //Db set is responsile rather be the classes of the the table that we want in our applicaton
         // Name of dbset is the name of the table in the database
         public DbSet<Book> Books { get; set; }
-        public DbSet<Genre> Genres { get; set; }
+        public DbSet<Category> Categories { get; set; }
+        public DbSet<Author> Authors { get; set; }
+        public DbSet<SubCategory> SubCategories { get; set; }
+        public DbSet<Publisher> Publishers { get; set; }
+        public DbSet<BookDetail> BookDetails { get; set; }
 
         protected override void OnConfiguring(DbContextOptionsBuilder optionsBuilder)
         {
