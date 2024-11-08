@@ -6,6 +6,7 @@ using System.Collections.Generic;
 using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
+using static System.Runtime.InteropServices.JavaScript.JSType;
 
 namespace CodingWiki_DataAccess.Data
 {
@@ -56,6 +57,12 @@ namespace CodingWiki_DataAccess.Data
             modelBuilder.Entity<Fluent_Book>().HasKey(u => u.BookId);
             modelBuilder.Entity<Fluent_Book>().Property(u => u.ISBM).HasMaxLength(20).IsRequired();
             modelBuilder.Entity<Fluent_Book>().Ignore(u => u.PriceRange);
+            // One to Many Mapping Book to Publisher one publisher can have many books Publisher as parent
+            // book can have one publisher and publiher can have many books 
+            // for on to many we canot define wjhat class will have Fk beacuse only one class can have Fk
+            // Publisher cannot have FK 
+            modelBuilder.Entity<Fluent_Book>().HasOne(b => b.Publisher).WithMany(b => b.Books).
+                HasForeignKey(u => u.Publisher_Id);
 
             //fluent Author
             modelBuilder.Entity<Fluent_Author>().ToTable("Fluent_Authors");

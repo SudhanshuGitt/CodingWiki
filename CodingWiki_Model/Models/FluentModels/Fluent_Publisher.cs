@@ -17,7 +17,7 @@ namespace CodingWiki_Model.Models.FluentModels
         public string Location { get; set; }
 
         // if we wan to retrive all books that publisher has published
-        //public IList<Fluent_Book> Books { get; set; }
+        public IList<Fluent_Book> Books { get; set; }
 
     }
 }

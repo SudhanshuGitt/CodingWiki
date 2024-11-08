@@ -23,12 +23,11 @@ namespace CodingWiki_Model.Models.FluentModels
         //navigation property to Book Detail table
         public Fluent_BookDetail BookDetail { get; set; }
 
-        // One to Many (One book can have only one publisher but one pulisher can pulish multiple books)
-        //[ForeignKey("Publisher")]
-        //public int Publisher_Id { get; set; }
+         //One to Many (One book can have only one publisher but one pulisher can pulish multiple books)
+        public int Publisher_Id { get; set; }
 
-        //// Navigation prorperty
-        //public Fluent_Publisher Publisher { get; set; }
+        // Navigation prorperty
+        public Fluent_Publisher Publisher { get; set; }
 
         ////Author can have mutiple books and books can have multitple authors(many to many)
         //public List<Fluent_BookAuthorMap> BookAuthorMap { get; set; }
