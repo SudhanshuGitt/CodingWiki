@@ -34,8 +34,8 @@ namespace CodingWiki_Model.Models.FluentModels
         // if we combine two one to may relaiton we will have many to many relation(.net cor 5 or above)
         // if not .net 5 we need to create mapping table
 
-        public List<Fluent_Book> Books { get; set; }
-        //public List<Fluent_BookAuthorMap> BookAuthorMap { get; set; }
+        //public List<Fluent_Book> Books { get; set; }
+        public List<Fluent_BookAuthorMap> BookAuthorMap { get; set; }
 
     }
 }

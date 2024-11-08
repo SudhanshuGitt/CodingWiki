@@ -26,12 +26,19 @@ namespace CodingWiki_DataAccess.Data
         public DbSet<SubCategory> SubCategories { get; set; }
         public DbSet<Publisher> Publishers { get; set; }
         public DbSet<BookDetail> BookDetails { get; set; }
+        // we dont need to create Dbset for BookAUthorMap EF Core autmaically know
+        // it is a mapping table because of Navigation Property
+        // but to retrive record we can create Db Set
+        public DbSet<BookAuthorMap> BookAuthorMaps { get; set; }
 
         // rename to fluent_BookDetails
         public DbSet<Fluent_BookDetail> BookDetails_fluent { get; set; }
         public DbSet<Fluent_Book> Books_fluent { get; set; }
         public DbSet<Fluent_Author> Authors_fluent { get; set; }
         public DbSet<Fluent_Publisher> Publisher_fluent { get; set; }
+        public DbSet<Fluent_BookAuthorMap> Fluent_BookAuthorMaps { get; set; }
+
+
 
         protected override void OnConfiguring(DbContextOptionsBuilder optionsBuilder)
         {
@@ -75,6 +82,15 @@ namespace CodingWiki_DataAccess.Data
             modelBuilder.Entity<Fluent_Publisher>().ToTable("Fluent_Publishers");
             modelBuilder.Entity<Fluent_Publisher>().HasKey(u => u.Publisher_Id);
             modelBuilder.Entity<Fluent_Publisher>().Property(u => u.Publisher_Name).HasColumnName("Name").IsRequired();
+
+            //FLuent Book Author
+            modelBuilder.Entity<Fluent_BookAuthorMap>().HasKey(b => new { b.Author_Id, b.Book_Id });
+            //Many to Many One Book can have many Authors and viceversa
+            modelBuilder.Entity<Fluent_BookAuthorMap>().HasOne(b => b.Book).WithMany(b => b.BookAuthorMap)
+                .HasForeignKey(u => u.Book_Id);
+            modelBuilder.Entity<Fluent_BookAuthorMap>().HasOne(b => b.Author).WithMany(b => b.BookAuthorMap)
+                .HasForeignKey(u => u.Author_Id);
+
 
 
 
