@@ -1,4 +1,5 @@
-﻿using CodingWiki_Model.Models;
+﻿using CodingWiki_DataAccess.Data.FluentConfig;
+using CodingWiki_Model.Models;
 using CodingWiki_Model.Models.FluentModels;
 using Microsoft.EntityFrameworkCore;
 using System;
@@ -47,53 +48,12 @@ namespace CodingWiki_DataAccess.Data
 
         protected override void OnModelCreating(ModelBuilder modelBuilder)
         {
-            // fluent BookDetails
-            // change table name and column name using fluent API
-            modelBuilder.Entity<Fluent_BookDetail>().ToTable("Fluent_BookDetials");
-            modelBuilder.Entity<Fluent_BookDetail>().Property(u => u.NumberOfChapters).HasColumnName("NoOfChapters");
-            //adding required and PK to rproperty
-            modelBuilder.Entity<Fluent_BookDetail>().HasKey(u => u.BookDetail_Id);
-            modelBuilder.Entity<Fluent_BookDetail>().Property(u => u.NumberOfChapters).IsRequired();
-            // One to One Mapping Book to BookDetail ane book can have one book detail and detail can be linked to one book only Book as parent
-            // Bookdetail can have one book and book can have(with)  one bookdetial and FK(Book_Id) is in BookDetail 
-            modelBuilder.Entity<Fluent_BookDetail>().HasOne(b => b.Book).WithOne(b => b.BookDetail).
-                HasForeignKey<Fluent_BookDetail>(u => u.Book_Id);
 
-            // fluent Book
-            modelBuilder.Entity<Fluent_Book>().ToTable("Fluent_Books");
-            modelBuilder.Entity<Fluent_Book>().HasKey(u => u.BookId);
-            modelBuilder.Entity<Fluent_Book>().Property(u => u.ISBM).HasMaxLength(20).IsRequired();
-            modelBuilder.Entity<Fluent_Book>().Ignore(u => u.PriceRange);
-            // One to Many Mapping Book to Publisher one publisher can have many books Publisher as parent
-            // book can have one publisher and publiher can have many books 
-            // for on to many we canot define wjhat class will have Fk beacuse only one class can have Fk
-            // Publisher cannot have FK 
-            modelBuilder.Entity<Fluent_Book>().HasOne(b => b.Publisher).WithMany(b => b.Books).
-                HasForeignKey(u => u.Publisher_Id);
-
-            //fluent Author
-            modelBuilder.Entity<Fluent_Author>().ToTable("Fluent_Authors");
-            modelBuilder.Entity<Fluent_Author>().HasKey(u => u.Author_Id);
-            modelBuilder.Entity<Fluent_Author>().Property(u => u.FirstName).HasMaxLength(50).IsRequired();
-            modelBuilder.Entity<Fluent_Author>().Property(u => u.LastName).IsRequired();
-            modelBuilder.Entity<Fluent_Author>().Ignore(u => u.FullName);
-
-            //fluent Publisher
-            modelBuilder.Entity<Fluent_Publisher>().ToTable("Fluent_Publishers");
-            modelBuilder.Entity<Fluent_Publisher>().HasKey(u => u.Publisher_Id);
-            modelBuilder.Entity<Fluent_Publisher>().Property(u => u.Publisher_Name).HasColumnName("Name").IsRequired();
-
-            //FLuent Book Author
-            modelBuilder.Entity<Fluent_BookAuthorMap>().HasKey(b => new { b.Author_Id, b.Book_Id });
-            //Many to Many One Book can have many Authors and viceversa
-            modelBuilder.Entity<Fluent_BookAuthorMap>().HasOne(b => b.Book).WithMany(b => b.BookAuthorMap)
-                .HasForeignKey(u => u.Book_Id);
-            modelBuilder.Entity<Fluent_BookAuthorMap>().HasOne(b => b.Author).WithMany(b => b.BookAuthorMap)
-                .HasForeignKey(u => u.Author_Id);
-
-
-
-
+            modelBuilder.ApplyConfiguration(new FluentBookDetailConfig());
+            modelBuilder.ApplyConfiguration(new FluentBookConfig());
+            modelBuilder.ApplyConfiguration(new FluentAuthorConfig());
+            modelBuilder.ApplyConfiguration(new FluentPublisherConfig());
+            modelBuilder.ApplyConfiguration(new FluentBookAuthorMapConfig());
 
             // we need to work on price property in the Book Entity
             modelBuilder.Entity<Book>().Property(b => b.Price).HasPrecision(10, 5);
