@@ -46,6 +46,10 @@ namespace CodingWiki_DataAccess.Data
             //adding required and PK to rproperty
             modelBuilder.Entity<Fluent_BookDetail>().HasKey(u => u.BookDetail_Id);
             modelBuilder.Entity<Fluent_BookDetail>().Property(u => u.NumberOfChapters).IsRequired();
+            // One to One Mapping Book to BookDetail ane book can have one book detail and detail can be linked to one book only Book as parent
+            // Bookdetail can have one book and book can have(with)  one bookdetial and FK(Book_Id) is in BookDetail 
+            modelBuilder.Entity<Fluent_BookDetail>().HasOne(b => b.Book).WithOne(b => b.BookDetail).
+                HasForeignKey<Fluent_BookDetail>(u => u.Book_Id);
 
             // fluent Book
             modelBuilder.Entity<Fluent_Book>().ToTable("Fluent_Books");
