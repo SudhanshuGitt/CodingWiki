@@ -1,4 +1,5 @@
 ﻿using CodingWiki_Model.Models;
+using CodingWiki_Model.Models.FluentModels;
 using Microsoft.EntityFrameworkCore;
 using System;
 using System.Collections.Generic;
@@ -25,6 +26,12 @@ namespace CodingWiki_DataAccess.Data
         public DbSet<Publisher> Publishers { get; set; }
         public DbSet<BookDetail> BookDetails { get; set; }
 
+        // rename to fluent_BookDetails
+        public DbSet<Fluent_BookDetail> BookDetails_fluent { get; set; }
+        public DbSet<Fluent_Book> Books_fluent { get; set; }
+        public DbSet<Fluent_Author> Authors_fluent { get; set; }
+        public DbSet<Fluent_Publisher> Publisher_fluent { get; set; }
+
         protected override void OnConfiguring(DbContextOptionsBuilder optionsBuilder)
         {
             optionsBuilder.UseSqlServer("Server=MSI;Database=CodingWikiEF;Trusted_Connection=True;TrustServerCertificate=True");
@@ -32,10 +39,40 @@ namespace CodingWiki_DataAccess.Data
 
         protected override void OnModelCreating(ModelBuilder modelBuilder)
         {
+            // fluent BookDetails
+            // change table name and column name using fluent API
+            modelBuilder.Entity<Fluent_BookDetail>().ToTable("Fluent_BookDetials");
+            modelBuilder.Entity<Fluent_BookDetail>().Property(u => u.NumberOfChapters).HasColumnName("NoOfChapters");
+            //adding required and PK to rproperty
+            modelBuilder.Entity<Fluent_BookDetail>().HasKey(u => u.BookDetail_Id);
+            modelBuilder.Entity<Fluent_BookDetail>().Property(u => u.NumberOfChapters).IsRequired();
+
+            // fluent Book
+            modelBuilder.Entity<Fluent_Book>().ToTable("Fluent_Books");
+            modelBuilder.Entity<Fluent_Book>().HasKey(u => u.BookId);
+            modelBuilder.Entity<Fluent_Book>().Property(u => u.ISBM).HasMaxLength(20).IsRequired();
+            modelBuilder.Entity<Fluent_Book>().Ignore(u => u.PriceRange);
+
+            //fluent Author
+            modelBuilder.Entity<Fluent_Author>().ToTable("Fluent_Authors");
+            modelBuilder.Entity<Fluent_Author>().HasKey(u => u.Author_Id);
+            modelBuilder.Entity<Fluent_Author>().Property(u => u.FirstName).HasMaxLength(50).IsRequired();
+            modelBuilder.Entity<Fluent_Author>().Property(u => u.LastName).IsRequired();
+            modelBuilder.Entity<Fluent_Author>().Ignore(u => u.FullName);
+
+            //fluent Publisher
+            modelBuilder.Entity<Fluent_Publisher>().ToTable("Fluent_Publishers");
+            modelBuilder.Entity<Fluent_Publisher>().HasKey(u => u.Publisher_Id);
+            modelBuilder.Entity<Fluent_Publisher>().Property(u => u.Publisher_Name).HasColumnName("Name").IsRequired();
+
+
+
+
             // we need to work on price property in the Book Entity
             modelBuilder.Entity<Book>().Property(b => b.Price).HasPrecision(10, 5);
 
             // how to set a composite key using fluentAPI
+            // code first will give prefrence to fluent API then to Data Annoatation then default convention
             modelBuilder.Entity<BookAuthorMap>().HasKey(b => new { b.Author_Id, b.Book_Id });
 
             modelBuilder.Entity<Book>().HasData(
