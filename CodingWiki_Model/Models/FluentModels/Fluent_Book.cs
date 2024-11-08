@@ -29,6 +29,8 @@ namespace CodingWiki_Model.Models.FluentModels
         // Navigation prorperty
         public Fluent_Publisher Publisher { get; set; }
 
+        public List<Fluent_Author> Authors { get; set; }
+
         ////Author can have mutiple books and books can have multitple authors(many to many)
         //public List<Fluent_BookAuthorMap> BookAuthorMap { get; set; }
     }

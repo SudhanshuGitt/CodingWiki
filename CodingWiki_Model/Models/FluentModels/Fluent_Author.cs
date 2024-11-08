@@ -27,13 +27,14 @@ namespace CodingWiki_Model.Models.FluentModels
 
         }
 
+
         //Author can have mutiple books and books can have multitple authors(many to many)
         // EF core will create an Intermediate table AuthorBook that has AuthorId and BookId
         // Author book table has 1 to many relation wth Author aswell as Booktable
         // if we combine two one to may relaiton we will have many to many relation(.net cor 5 or above)
         // if not .net 5 we need to create mapping table
 
-        //public List<Book> Books { get; set; }
+        public List<Fluent_Book> Books { get; set; }
         //public List<Fluent_BookAuthorMap> BookAuthorMap { get; set; }
 
     }
