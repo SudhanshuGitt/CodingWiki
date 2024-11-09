@@ -1,5 +1,6 @@
 ﻿using CodingWiki_Model.Models;
 using Microsoft.EntityFrameworkCore;
+using Microsoft.Extensions.Logging;
 using System;
 using System.Collections.Generic;
 using System.Linq;
@@ -27,7 +28,10 @@ namespace CodingWiki_DataAccess.Data
 
         protected override void OnConfiguring(DbContextOptionsBuilder optionsBuilder)
         {
-            optionsBuilder.UseSqlServer("Server=MSI;Database=CodingWikiEF;Trusted_Connection=True;TrustServerCertificate=True");
+            // if we wan to see what query is executed we can use Logto
+            // we can pass command in array we want to log and we want to log onlu info to see query
+            optionsBuilder.UseSqlServer("Server=MSI;Database=CodingWikiEF;Trusted_Connection=True;TrustServerCertificate=True").
+                LogTo(Console.WriteLine, new[] { DbLoggerCategory.Database.Command.Name }, LogLevel.Information);
         }
 
         protected override void OnModelCreating(ModelBuilder modelBuilder)
