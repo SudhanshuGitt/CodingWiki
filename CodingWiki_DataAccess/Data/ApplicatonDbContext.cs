@@ -17,6 +17,10 @@ namespace CodingWiki_DataAccess.Data
     // db context provide all logic needed for ef core
     public class ApplicatonDbContext : DbContext
     {
+        //we have pass options to base class to configure connenton string
+        // it will make sure connection string is configured in Db context which is base class
+        public ApplicatonDbContext(DbContextOptions<ApplicatonDbContext> options) : base(options) { }
+
         //Db set is responsile rather be the classes of the the table that we want in our applicaton
         // Name of dbset is the name of the table in the database
         public DbSet<Book> Books { get; set; }
@@ -26,12 +30,14 @@ namespace CodingWiki_DataAccess.Data
         public DbSet<Publisher> Publishers { get; set; }
         public DbSet<BookDetail> BookDetails { get; set; }
 
+        
+
         protected override void OnConfiguring(DbContextOptionsBuilder optionsBuilder)
         {
             // if we wan to see what query is executed we can use Logto
             // we can pass command in array we want to log and we want to log onlu info to see query
-            optionsBuilder.UseSqlServer("Server=MSI;Database=CodingWikiEF;Trusted_Connection=True;TrustServerCertificate=True").
-                LogTo(Console.WriteLine, new[] { DbLoggerCategory.Database.Command.Name }, LogLevel.Information);
+            //optionsBuilder.UseSqlServer("Server=MSI;Database=CodingWikiEF;Trusted_Connection=True;TrustServerCertificate=True").
+            //    LogTo(Console.WriteLine, new[] { DbLoggerCategory.Database.Command.Name }, LogLevel.Information);
         }
 
         protected override void OnModelCreating(ModelBuilder modelBuilder)

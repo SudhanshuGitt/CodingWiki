@@ -1,7 +1,18 @@
+using CodingWiki_DataAccess.Data;
+using Microsoft.EntityFrameworkCore;
+
 var builder = WebApplication.CreateBuilder(args);
 
 // Add services to the container.
 builder.Services.AddControllersWithViews();
+// configure Application db context in Program.cs
+// we need to tell this Db context will use Sql serevr
+// and pass connection string
+builder.Services.AddDbContext<ApplicatonDbContext>(options =>
+{
+    options.UseSqlServer(builder.Configuration.GetConnectionString("DefaultConnection"));
+});
+
 
 var app = builder.Build();
 
