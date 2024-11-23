@@ -10,6 +10,9 @@ builder.Services.AddControllersWithViews();
 // and pass connection string
 builder.Services.AddDbContext<ApplicatonDbContext>(options =>
 {
+    // to tell efcore to not track the query
+    // but its of no use
+    //options.UseQueryTrackingBehavior(QueryTrackingBehavior.NoTracking);
     options.UseSqlServer(builder.Configuration.GetConnectionString("DefaultConnection"));
 });
 

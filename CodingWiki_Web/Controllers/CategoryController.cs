@@ -17,7 +17,11 @@ namespace CodingWiki_Web.Controllers
 
         public async Task<IActionResult> Index()
         {
-            List<Category> categories = await _context.Categories.ToListAsync();
+            // Ef core will start tracking on moment recieve the entities
+            // any changes to entity will be appled to db when we save the chages
+
+            // no tracking queries are useful when we use data for read only purposes
+            List<Category> categories = await _context.Categories.AsNoTracking().ToListAsync();
             return View(categories);
         }
 
@@ -69,6 +73,8 @@ namespace CodingWiki_Web.Controllers
                 return NotFound();
             }
             _context.Remove(category);
+            // tracker will track if there is any modified Added or Deleted state is there
+            // if there is on savechanges it will aplly the state and updated it to unchanged
             await _context.SaveChangesAsync();
             return RedirectToAction(nameof(Index));
         }
