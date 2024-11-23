@@ -21,7 +21,7 @@ namespace CodingWiki_Model.Models
         public string Location { get; set; }
 
         // if we wan to retrive all books that publisher has published
-        public IList<Book> Books { get; set; }
+        public virtual IList<Book> Books { get; set; }
 
     }
 }

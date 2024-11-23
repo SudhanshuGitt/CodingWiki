@@ -10,7 +10,9 @@ builder.Services.AddControllersWithViews();
 // and pass connection string
 builder.Services.AddDbContext<ApplicatonDbContext>(options =>
 {
-    options.UseSqlServer(builder.Configuration.GetConnectionString("DefaultConnection"));
+    // lazy loading configuration
+    // need to add virtual to related properties
+    options.UseLazyLoadingProxies().UseSqlServer(builder.Configuration.GetConnectionString("DefaultConnection"));
 });
 
 

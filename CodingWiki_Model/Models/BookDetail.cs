@@ -22,6 +22,6 @@ namespace CodingWiki_Model.Models
         [ForeignKey("Book")]
         public int Book_Id { get; set; }
         // we need to add navigation property to define this a FK to Book Table
-        public Book Book { get; set; }
+        public virtual Book Book { get; set; }
     }
 }

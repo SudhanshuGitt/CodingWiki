@@ -39,7 +39,7 @@ namespace CodingWiki_Model.Models
         // if not .net 5 we need to create mapping table
 
         //public List<Book> Books { get; set; }
-        public List<BookAuthorMap> BookAuthorMap { get; set; }
+        public virtual List<BookAuthorMap> BookAuthorMap { get; set; }
 
     }
 }

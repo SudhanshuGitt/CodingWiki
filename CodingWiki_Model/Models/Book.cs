@@ -24,16 +24,16 @@ namespace CodingWiki_Model.Models
         public decimal PriceRange { get; set; }
         // one to one mappping
         //navigation property to Book Detail table
-        public BookDetail BookDetail { get; set; }
+        public virtual BookDetail BookDetail { get; set; }
 
         // One to Many (One book can have only one publisher but one pulisher can pulish multiple books)
         [ForeignKey("Publisher")]
         public int Publisher_Id { get; set; }
 
         // Navigation prorperty
-        public Publisher Publisher { get; set; }
+        public virtual Publisher Publisher { get; set; }
 
         //Author can have mutiple books and books can have multitple authors(many to many)
-        public List<BookAuthorMap> BookAuthorMap { get; set; }
+        public virtual List<BookAuthorMap> BookAuthorMap { get; set; }
     }
 }

@@ -23,7 +23,9 @@ namespace CodingWiki_Web.Controllers
             // Include directly work on entity
             // if we wan to work on the child entities then we can use then include
             // then include will be working on BookAuthorMap
-            List<Book> books = _context.Books.Include(b => b.Publisher).Include(b => b.BookAuthorMap).ThenInclude(b => b.Author).ToList();
+            IQueryable<Book> books = _context.Books.Include(b => b.Publisher).Include(b => b.BookAuthorMap).ThenInclude(b => b.Author);
+
+            var temp = books.Where(b => b.BookId == 1).ToList();
             //List<Book> books = await _context.Books.ToListAsync();
             //foreach (var book in books)
             //{
@@ -46,6 +48,10 @@ namespace CodingWiki_Web.Controllers
             //}
             // Eager loading is the process wherw query for one type eb book load the related entites(publisher)
             return View(books);
+
+            //lazy loading of related properties
+            // it is only be loaded when they are accessed
+            // lazy loading can cause extra db roundtripss
         }
 
         public async Task<IActionResult> Upsert(int? id)
