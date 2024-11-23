@@ -24,6 +24,9 @@ namespace CodingWiki_DataAccess.Data
         //Db set is responsile rather be the classes of the the table that we want in our applicaton
         // Name of dbset is the name of the table in the database
         public DbSet<Book> Books { get; set; }
+
+        // we need to have dbset for the view and sproc
+        public DbSet<MainBookDetails> MainBookDetails { get; set; }
         public DbSet<Category> Categories { get; set; }
         public DbSet<Author> Authors { get; set; }
         public DbSet<SubCategory> SubCategories { get; set; }
@@ -72,6 +75,13 @@ namespace CodingWiki_DataAccess.Data
             );
 
             modelBuilder.Entity<Book>().HasData(bookList);
+
+            // we needd to tell Ef Core we do not want to create the table there is a particular view 
+            // that need to be mapped to MainBookDetails
+            // it is similar to totable but EfCore doesnot know how to create the view
+            // it will ignore this model and wont add anything to db
+            // EFcore will never track this entity because of hasNoKey
+            modelBuilder.Entity<MainBookDetails>().HasNoKey().ToView("GetMainBookDetails");
         }
 
 

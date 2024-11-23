@@ -213,6 +213,21 @@ namespace CodingWiki_Web.Controllers
 
         public async Task<IActionResult> Playground(int? id)
         {
+
+
+            // view and sproc
+            var viewList = await _context.MainBookDetails.ToListAsync();
+            var viewList1 = await _context.MainBookDetails.FirstOrDefaultAsync();
+            var viewList2 = _context.MainBookDetails.Where(m => m.Price > 30);
+
+            // raw sql       
+            var bookRaw = _context.Books.FromSqlRaw("SELECT * FROM dbo.Books");
+            var id1 = 1;
+            var bookInterpolated = _context.Books.FromSqlInterpolated($"SELECT * FROM dbo.Books where bookid={id1}");
+
+            // sproc
+            var bookproc = _context.Books.FromSqlInterpolated($"EXEC dbo.getAllBookDetailById {id1}").ToList();
+
             // I queryable inhert from i Enumwrbale
 
 
