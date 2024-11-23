@@ -29,8 +29,12 @@ namespace CodingWiki_DataAccess.Data
         public DbSet<SubCategory> SubCategories { get; set; }
         public DbSet<Publisher> Publishers { get; set; }
         public DbSet<BookDetail> BookDetails { get; set; }
+        // we dont need to create Dbset for BookAUthorMap EF Core autmaically know
+        // it is a mapping table because of Navigation Property
+        // but to retrive record we can create Db Set
+        public DbSet<BookAuthorMap> BookAuthorMaps { get; set; }
 
-        
+
 
         protected override void OnConfiguring(DbContextOptionsBuilder optionsBuilder)
         {
